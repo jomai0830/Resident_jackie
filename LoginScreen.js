@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -10,47 +10,16 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-  Alert,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-// Import tab screens
-import HomeScreen from './HomeScreen';
-import ProfileScreen from './ProfileScreen';
-import DocumentsScreen from './DocumentsScreen';
-
-// Tab Navigator Component
-const Tab = createBottomTabNavigator();
-function Tabs() {
-  return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Documents" component={DocumentsScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
-    </Tab.Navigator>
-  );
-}
-
-// LoginScreen Component
-export default function LoginScreen({ navigation, setIsLoggedIn }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [secureText, setSecureText] = useState(true);
+export default function LoginScreen({ navigation, route }) {
+  const { setIsLoggedIn } = route.params;
 
   const handleLogin = () => {
-    const validEmail = '';
-    const validPassword = '';
-
-    if (email === validEmail && password === validPassword) {
-      setIsLoggedIn(true);
-      setTimeout(() => {
-        setIsLoggedIn(true);
-      }, 100);
-    } else {
-      Alert.alert('Invalid Credentials', 'Invalid email or password.');
-    }
+    // Just set login to true regardless of input (since we're removing validation)
+    setIsLoggedIn(true);
   };
 
   return (
@@ -67,15 +36,11 @@ export default function LoginScreen({ navigation, setIsLoggedIn }) {
 
           <View style={styles.card}>
             <Text style={styles.title}>BrgyGO</Text>
-            <Text style={styles.subtitle}>
-              Start a better experience by logging into your account!
-            </Text>
+            <Text style={styles.subtitle}>Start a better experience by logging into your account!</Text>
 
             <TextInput
               style={styles.input}
               placeholder="Enter your Email"
-              value={email}
-              onChangeText={setEmail}
               placeholderTextColor="#999"
               keyboardType="email-address"
               autoCapitalize="none"
@@ -85,23 +50,19 @@ export default function LoginScreen({ navigation, setIsLoggedIn }) {
               <TextInput
                 style={styles.passwordInput}
                 placeholder="Enter your Password"
-                secureTextEntry={secureText}
-                value={password}
-                onChangeText={setPassword}
+                secureTextEntry={true}
                 placeholderTextColor="#999"
               />
-              <TouchableOpacity onPress={() => setSecureText(!secureText)}>
-                <Ionicons
-                  name={secureText ? 'eye-off-outline' : 'eye-outline'}
-                  size={22}
-                  color="#999"
-                />
+              <TouchableOpacity>
+                <Ionicons name="eye-off-outline" size={22} color="#999" />
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity>
-              <Text style={styles.forgot}>Forgot your Password?</Text>
-            </TouchableOpacity>
+            <View style={{ width: '100%' }}>
+              <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')} style={{ alignSelf: 'flex-end' }}>
+                <Text style={styles.forgot}>Forgot your Password?</Text>
+              </TouchableOpacity>
+            </View>
 
             <TouchableOpacity style={styles.button} onPress={handleLogin}>
               <Text style={styles.buttonText}>SIGN IN</Text>
@@ -120,9 +81,6 @@ export default function LoginScreen({ navigation, setIsLoggedIn }) {
   );
 }
 
-// Export Tabs for use in App.js
-export { Tabs as MainTabs };
-
 const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -133,27 +91,31 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 20,
   },
-  logoWrapper: { marginBottom: -40, zIndex: 2 },
+  logoWrapper: {
+    marginBottom: -20,
+    zIndex: 2,
+  },
   logo: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 150,
+    height: 150,
+    borderRadius: 70,
     resizeMode: 'contain',
     backgroundColor: '#fff',
+    marginBottom: -30,
   },
   card: {
     width: width * 0.85,
     backgroundColor: '#fff',
     borderRadius: 25,
     padding: 25,
-    paddingTop: 60,
+    paddingTop: 70,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 10,
     elevation: 6,
-    marginTop: 20,
+    marginTop: 5,
   },
   title: {
     fontSize: 28,
@@ -183,7 +145,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 10,
+    marginBottom: 5,
   },
   passwordInput: {
     flex: 1,
@@ -191,10 +153,10 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   forgot: {
-    alignSelf: 'flex-end',
     color: 'red',
-    fontSize: 12,
-    marginBottom: 15,
+    fontSize: 10,
+    marginBottom: 20,
+    marginTop: 5,
   },
   button: {
     width: '100%',
@@ -209,11 +171,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   bottomText: {
-    fontSize: 13,
+    fontSize: 11,
     color: '#000',
   },
   link: {
     color: '#355BCF',
     fontWeight: 'bold',
+    fontSize: 11,
   },
 });

@@ -27,12 +27,12 @@ import AboutScreen from './AboutScreen';
 import ChangePasswordScreen from './ChangePasswordScreen';
 import LoginScreen from './LoginScreen';
 import SignupScreen from './SignupScreen';
-
+import ForgotPasswordScreen from './ForgotPasswordScreen'; // ✅ Imported ForgotPassword screen
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
-// Animated tab icon
+// Animated icon for tab bar
 function AnimatedIcon({ name, color, focused }) {
   const scale = useSharedValue(focused ? 1.25 : 1);
   React.useEffect(() => {
@@ -49,7 +49,7 @@ function AnimatedIcon({ name, color, focused }) {
 }
 
 // Custom bottom tab bar
-function CustomTabBar({ state, navigation, descriptors }) {
+function CustomTabBar({ state, navigation }) {
   const { colors } = useTheme();
   return (
     <>
@@ -77,7 +77,7 @@ function CustomTabBar({ state, navigation, descriptors }) {
   );
 }
 
-// Profile stack for nested navigation
+// Profile stack
 function ProfileStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -90,7 +90,8 @@ function ProfileStack() {
   );
 }
 
-// Tab navigator
+
+// Bottom tab navigation
 function TabRoutes() {
   return (
     <Tab.Navigator
@@ -107,7 +108,7 @@ function TabRoutes() {
   );
 }
 
-// Main stack nested inside drawer
+// Stack inside drawer
 function MainStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -117,7 +118,7 @@ function MainStack() {
   );
 }
 
-// Drawer navigator
+// Drawer navigation
 function AppDrawer() {
   const { colors } = useTheme();
   return (
@@ -142,19 +143,23 @@ function AppDrawer() {
   );
 }
 
-// Auth stack for login/signup
+// ✅ Auth stack with Forgot Password
 function AuthStack({ setIsLoggedIn }) {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Login">
-        {(props) => <LoginScreen {...props} setIsLoggedIn={setIsLoggedIn} />}
-      </Stack.Screen>
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        initialParams={{ setIsLoggedIn }} // ✅ Correct way to pass extra props
+      />
       <Stack.Screen name="Signup" component={SignupScreen} />
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
     </Stack.Navigator>
   );
 }
 
-// Root App
+// Root App component
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
