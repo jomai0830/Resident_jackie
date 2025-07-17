@@ -66,7 +66,7 @@ export default function SignupScreen({ navigation }) {
       [
         {
           text: 'OK',
-          onPress: () => navigation.replace('Login'), // Change to 'Login' if you want
+          onPress: () => navigation.replace('LoginScreen'), // Change to 'Login' if you want
         },
       ],
       { cancelable: false }
@@ -126,7 +126,7 @@ export default function SignupScreen({ navigation }) {
 
             <Text style={styles.bottomText}>
               Already have an Account?{' '}
-              <Text style={styles.link} onPress={() => navigation.navigate('Login')}>
+              <Text style={styles.link} onPress={() => navigation.replace('Login')}>
                 LOG IN
               </Text>
             </Text>

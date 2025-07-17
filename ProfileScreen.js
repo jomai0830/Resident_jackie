@@ -13,27 +13,17 @@ import {
   FontAwesome,
   Ionicons,
 } from '@expo/vector-icons';
-import { useTheme } from './ThemeContext';
 
+import { useTheme } from './ThemeContext';
 export default function ProfileScreen({ navigation }) {
   const { isDark, toggleTheme, colors } = useTheme();
 
   const handleLogout = () => {
-    Alert.alert(
-      'Confirm Logout',
-      'Are you sure you want to log out?\nYou will need to log in again to access your account.',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Log Out',
-          style: 'destructive',
-          onPress: () => {
-            // Add your actual logout logic here
-            Alert.alert('Logged out', 'You have successfully logged out.');
-          },
-        },
-      ]
-    );
+    // Reset the navigation stack and go to LoginScreen
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'LoginScreen' }],
+    });
   };
 
   return (

@@ -27,7 +27,7 @@ export default function EmergencyScreen() {
       alignSelf: 'center',
     },
     card: {
-      backgroundColor: isDark ? '#1E1E1E' : '#fff',
+      backgroundColor: '#eb6e68ff',
       borderRadius: 12,
       padding: 15,
       marginBottom: 10,
