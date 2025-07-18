@@ -13,10 +13,11 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { createStackNavigator } from '@react-navigation/stack';
 
-export default function LoginScreen({ navigation, route }) {
-  const { setIsLoggedIn } = route.params;
+const Stack = createStackNavigator();
 
+export default function LoginScreen({ navigation, setIsLoggedIn }) {
   const handleLogin = () => {
     // Just set login to true regardless of input (since we're removing validation)
     setIsLoggedIn(true);

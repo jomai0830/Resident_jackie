@@ -15,15 +15,12 @@ import {
 } from '@expo/vector-icons';
 
 import { useTheme } from './ThemeContext';
-export default function ProfileScreen({ navigation }) {
+
+export default function ProfileScreen({ navigation, setIsLoggedIn }) {
   const { isDark, toggleTheme, colors } = useTheme();
 
   const handleLogout = () => {
-    // Reset the navigation stack and go to LoginScreen
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'LoginScreen' }],
-    });
+    setIsLoggedIn(false); // This logs out and shows AuthStack
   };
 
   return (

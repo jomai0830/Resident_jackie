@@ -126,7 +126,7 @@ export default function SignupScreen({ navigation }) {
 
             <Text style={styles.bottomText}>
               Already have an Account?{' '}
-              <Text style={styles.link} onPress={() => navigation.replace('Login')}>
+              <Text style={styles.link} onPress={() => navigation.replace('LoginScreen')}>
                 LOG IN
               </Text>
             </Text>
